@@ -36,13 +36,4 @@ def scrape_list(url)
   end
 end
 
-term = {
-  id: '16',
-  name: '16th Congress of the Philippines',
-  start_date: '2013-06-30',
-  end_date: '2016-06-30',
-  source: 'https://en.wikipedia.org/wiki/16th_Congress_of_the_Philippines',
-}
-ScraperWiki.save_sqlite([:id], term, 'terms')
-
 scrape_list('http://www.congress.gov.ph/members/')
