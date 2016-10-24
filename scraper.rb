@@ -16,22 +16,22 @@ end
 
 def scrape_list(url)
   noko = noko_for(url)
-  noko.css('section#comments table tr a[href*="search"]/@href').map(&:text).uniq.each do |link|
+  noko.css('.table-responsive.table-striped tr a[href*="search"]/@href').map(&:text).uniq.each do |link|
     mp_url = URI.join url, link
     mp = noko_for(mp_url)
-    box = mp.css('section#main')
 
-    data = { 
-      id: mp_url.to_s[/search.php\?id=(.*)/, 1],
-      name: box.css('h2').text.gsub('Hon. ', '').strip,
-      constituency: box.xpath('.//h3[contains(., "District Representative")]/following-sibling::h3[1]').text,
-      party: box.xpath('.//h3[contains(., "Party List")]').text.gsub(/Party List\s*-\s*/, ''),
-      image: box.css('img[src*="images/16th"]/@src').text,
-      term: 16,
-      source: mp_url.to_s,
+    data = {
+      id:           mp_url.to_s[/search.php\?id=(.*)/, 1],
+      name:         mp.css('.text-primary').text.gsub('Hon. ', '').strip,
+      constituency: mp.xpath('//*[contains(@class,"text-primary")]/following::small[1][contains(text(),"District Representative")]').text,
+      # party: Not available
+      image:        mp.css('img[src*="images/17th"]/@src').text,
+      term:         17,
+      source:       mp_url.to_s,
     }
-    data[:image] = URI.join(mp_url, data[:image]).to_s unless data[:image].to_s.empty?
-    # puts data
+    data[:image]        = URI.join(mp_url, data[:image]).to_s unless data[:image].to_s.empty?
+    data[:constituency] = data[:constituency].gsub('District Representative', '')
+
     ScraperWiki.save_sqlite([:name, :term], data)
   end
 end
