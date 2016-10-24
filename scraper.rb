@@ -24,13 +24,14 @@ def scrape_list(url)
       id:           mp_url.to_s[/search.php\?id=(.*)/, 1],
       name:         mp.css('.text-primary').text.gsub('Hon. ', '').strip,
       constituency: mp.xpath('//*[contains(@class,"text-primary")]/following::small[1][contains(text(),"District Representative")]').text,
-      # party: Not available
+      party:        mp.xpath('//*[contains(@class,"text-primary")]/following::small[1][contains(text(),"Party List")]').text,
       image:        mp.css('img[src*="images/17th"]/@src').text,
       term:         17,
       source:       mp_url.to_s,
     }
     data[:image]        = URI.join(mp_url, data[:image]).to_s unless data[:image].to_s.empty?
     data[:constituency] = data[:constituency].gsub('District Representative', '')
+    data[:party]        = data[:party].gsub('Party List - ', '')
 
     ScraperWiki.save_sqlite(%i(id term), data)
   end
