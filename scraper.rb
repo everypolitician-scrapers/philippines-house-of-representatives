@@ -32,7 +32,7 @@ def scrape_list(url)
     data[:image]        = URI.join(mp_url, data[:image]).to_s unless data[:image].to_s.empty?
     data[:constituency] = data[:constituency].gsub('District Representative', '')
 
-    ScraperWiki.save_sqlite([:name, :term], data)
+    ScraperWiki.save_sqlite(%i(id term), data)
   end
 end
 
