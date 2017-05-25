@@ -14,9 +14,9 @@ def noko_for(url)
   Nokogiri::HTML(open(url).read)
 end
 
-def scrape_list(url)
+def members_data(url)
   noko = noko_for(url)
-  noko.css('.table-responsive.table-striped tr a[href*="search"]/@href').map(&:text).uniq.each do |link|
+  noko.css('.table-responsive.table-striped tr a[href*="search"]/@href').map(&:text).uniq.map do |link|
     mp_url = URI.join url, link
     mp = noko_for(mp_url)
 
@@ -30,11 +30,13 @@ def scrape_list(url)
       source:       mp_url.to_s,
     }
     data[:image] = URI.join(mp_url, data[:image]).to_s unless data[:image].to_s.empty?
-    puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
-
-    ScraperWiki.save_sqlite(%i(id term), data)
+    data
   end
 end
 
+
+data = members_data('http://www.congress.gov.ph/members/')
+data.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
+
 ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
-scrape_list('http://www.congress.gov.ph/members/')
+ScraperWiki.save_sqlite(%i(id term), data)
