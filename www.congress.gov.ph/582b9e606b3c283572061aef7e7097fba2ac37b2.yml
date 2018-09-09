@@ -18,14 +18,14 @@ response:
     message: OK
   headers:
     Date:
-    - Sat, 08 Sep 2018 19:11:35 GMT
+    - Sun, 09 Sep 2018 04:01:57 GMT
     Content-Type:
     - text/html; charset=UTF-8
     Connection:
     - keep-alive
     Set-Cookie:
-    - __cfduid=d35bd3ad07b095149f39d1f22f24be3481536433894; expires=Sun, 08-Sep-19
-      19:11:34 GMT; path=/; domain=.congress.gov.ph; HttpOnly
+    - __cfduid=da5d25b72b78445e7b05681e22396c0021536465717; expires=Mon, 09-Sep-19
+      04:01:57 GMT; path=/; domain=.congress.gov.ph; HttpOnly
     X-Frame-Options:
     - DENY
     X-Xss-Protection:
@@ -37,16 +37,16 @@ response:
     Cache-Control:
     - max-age=172800
     Expires:
-    - Mon, 10 Sep 2018 19:14:05 GMT
+    - Tue, 11 Sep 2018 04:04:28 GMT
     X-Permitted-Cross-Domain-Policies:
     - none
     Server:
     - cloudflare
     Cf-Ray:
-    - 4573b8c3855392c4-SJC
+    - 4576c1ae22726dd2-SJC
     Content-Length:
-    - '6462'
+    - '6338'
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Sat, 08 Sep 2018 19:11:35 GMT
+recorded_at: Sun, 09 Sep 2018 04:01:58 GMT
